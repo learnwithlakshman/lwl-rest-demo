@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lwl.payat.domain.TranactionDto;
+import com.lwl.payat.domain.MyTransaction;
+import com.lwl.payat.domain.MyTransactionDto;
 import com.lwl.payat.domain.TransactionStatus;
 
 @RestController
@@ -23,16 +24,19 @@ public class PaymentController {
 	}
 
 	@PostMapping("pay")
-	public TranactionDto pay(@RequestBody TranactionDto tranactionDto) {
+	public MyTransaction pay(@RequestBody MyTransactionDto transactionDto) {
+		MyTransaction transaction = new MyTransaction();
 		Random random = new Random();
-		tranactionDto.setTransactionId(random.nextInt(5000 - 2000) + 2000);
+		transaction.setTransactionId(random.nextInt(5000 - 2000) + 2000);
 
-		if (tranactionDto.getMobile() != null && tranactionDto.getAmount() != null) {
-			tranactionDto.setStatus(TransactionStatus.SUCCESS);
+		if (transactionDto.getMobile() != null && transactionDto.getAmount() != null) {
+			transaction.setAmount(transactionDto.getAmount());
+			transaction.setMobile(transactionDto.getMobile());
+			transaction.setStatus(TransactionStatus.SUCCESS);
 		} else {
-			tranactionDto.setStatus(TransactionStatus.PENDING);
+			transaction.setStatus(TransactionStatus.PENDING);
 		}
 
-		return tranactionDto;
+		return transaction;
 	}
 }
