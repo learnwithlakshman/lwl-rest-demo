@@ -29,9 +29,10 @@ public class PaymentController {
 		Random random = new Random();
 		transaction.setTransactionId(random.nextInt(5000 - 2000) + 2000);
 
+		transaction.setAmount(transactionDto.getAmount());
+		transaction.setMobile(transactionDto.getMobile());
+
 		if (transactionDto.getMobile() != null && transactionDto.getAmount() != null) {
-			transaction.setAmount(transactionDto.getAmount());
-			transaction.setMobile(transactionDto.getMobile());
 			transaction.setStatus(TransactionStatus.SUCCESS);
 		} else {
 			transaction.setStatus(TransactionStatus.PENDING);
